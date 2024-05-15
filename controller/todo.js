@@ -1,7 +1,7 @@
 const { todos } = require('../models/todos');
 
 const add = async (req, res) => {
-    const inputTodoId = (todos.length + 1).toString();
+    const inputTodoId = todos.length + 1;
     const inputTodoTask = req.body.todoTask;
 
     if (!inputTodoTask) {
@@ -9,17 +9,17 @@ const add = async (req, res) => {
     }
 
     todos.push({
-        todoId: inputTodoId,
+        todoId: inputTodoId.toString(),
         todoTask: inputTodoTask
     });
-    res.status(201).json({
-        message: "Todo added successfully",
-        data: todos
+
+    res.render("index", {
+        data: todos,
     });
 };
 
 const list = async (req, res) => {
-    res.status(200).json({
+    res.render("index", {
         data: todos,
     });
 };
@@ -35,13 +35,9 @@ const del = async (req, res) => {
 
     if (index !== -1) {
         todos.splice(index, 1);
-        return res.status(200).json({
-            message: "Todo deleted successfully",
-            data: todos
-        });
     }
 
-    res.status(404).json({ message: "Todo not found" });
+    res.redirect('/');
 };
 
 module.exports = { add, list, del };

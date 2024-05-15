@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    <link rel="stylesheet" type="text/css" href="../public/css/styles.css">
+</head>
+<body>
+    <h2>Todo List</h2>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Task</th>
+            <th>Delete</th>
+        </tr>
+        <% data.forEach(element => { %>
+        <tr>
+            <td><%= element.todoId %></td>
+            <td><%= element.todoTask %></td>
+            <td>
+                <form action="/auth/delete" method="POST">
+                    <input type="hidden" name="todoId" value="<%= element.todoId %>">
+                    <button class="delete" type="submit">X</button>
+                </form>
+            </td>
+        </tr>
+        <% }) %>
+    </table>
+    <form action="/auth/add" method="POST">
+        <input type="text" name="todoTask" placeholder="Enter Task" required>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
